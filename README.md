@@ -14,7 +14,7 @@ Watchdog is a lightweight utility plugin for Grasshopper that acts as a "circuit
 
 
 # 📦 Installation  
-Download the latest .gha file from the Releases section (or [Food4Rhino](https://www.food4rhino.com/en/app/watchdog)), or install it directly via the Rhino Package Manager.
+Download the latest .gha file from the Releases section (or [Food4Rhino](https://www.food4rhino.com/en/app/watchdog)), or install it directly via the Rhino Package Manager by searching for "Watchdog".
 
 Open Grasshopper and go to File -> Special Folders -> Components Folder.
 

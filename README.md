@@ -38,7 +38,7 @@ MaxSec: Set your safety limit in seconds (e.g., 5 or 10).
 Note: Keep Watchdog Active = False while you are intentionally running a heavy simulation (like a final render or FEM analysis), then switch it back to True with ideal time limit for daily parametric modeling.
 ---
 
-# 🧪 Typical Crash Scenario Live Tests
+# 🧪 Typical Crash Scenario Tests
 
 1. Cross-Reference Solve Timeout  
 	In this scenario, a combinatorial explosion occurs due to Cross-Reference inputs and Data Tree structures adjusting.  

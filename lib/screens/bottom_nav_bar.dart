@@ -1,26 +1,25 @@
+import 'dart:developer';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:krishi_mitra/screens/agronomy_page.dart';
 import 'package:krishi_mitra/screens/home_screen/home_page.dart';
 import 'package:krishi_mitra/screens/mandi/mandi_page.dart';
 import 'package:krishi_mitra/screens/more/more_page.dart';
 
 class CommonBottomNavigation extends StatefulWidget {
   const CommonBottomNavigation({super.key});
-
+static  int page = 0;
   @override
   State<CommonBottomNavigation> createState() => _CommonBottomNavigationState();
 }
 
 class _CommonBottomNavigationState extends State<CommonBottomNavigation> {
-  int page = 0;
 
   final List pages = [
     const HomePage(),
     const MandiPage(),
-
-    const MorePage()
+    const MorePage(),
   ];
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
@@ -29,37 +28,38 @@ class _CommonBottomNavigationState extends State<CommonBottomNavigation> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       extendBody: true,
-      body: pages[page],
+      body: pages[CommonBottomNavigation.page],
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
-        index: 0,
+        index: CommonBottomNavigation.page,
         height: 60,
-        items: const <Widget>[
+        items:  <Widget>[
           Icon(
             CupertinoIcons.home,
             size: 30,
-            color: Colors.white,
+            color: Colors.green[900],
           ),
           Icon(
             CupertinoIcons.tree,
             size: 30,
-            color: Colors.white,
+            color: Colors.green[900],
           ),
 
           Icon(
             Icons.menu,
             size: 30,
-            color: Colors.white,
+            color: Colors.green[1000],
           )
         ],
-        color: Colors.green.shade700,
-        buttonBackgroundColor: Colors.green[900],
+        color: Colors.green.shade600,
+        buttonBackgroundColor: Colors.white,
         backgroundColor: Colors.transparent,
-        animationCurve: Curves.ease,
+        animationCurve: Curves.easeInOutQuart,
         animationDuration: const Duration(milliseconds: 600),
         onTap: (index) {
           setState(() {
-            page = index;
+
+            CommonBottomNavigation. page = index;
           });
         },
         letIndexChange: (index) => true,

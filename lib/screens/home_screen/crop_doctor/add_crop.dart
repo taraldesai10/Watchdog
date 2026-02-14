@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:krishi_mitra/firebase_storage/firebase_upload_data.dart';
+
 
 class AddCrop extends StatefulWidget {
   const AddCrop({super.key});
@@ -22,6 +24,7 @@ class AddCrop extends StatefulWidget {
 class _AddCropState extends State<AddCrop> {
   // var result;
 
+DateTime now = DateTime.now();
   final picker = ImagePicker();
 
   Future selectFile() async {
@@ -64,7 +67,7 @@ class _AddCropState extends State<AddCrop> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: selectFile,
-              child: const Text("select file"),
+              child:  Text("select picture".tr),
             ),
 
             (AddCrop.imageFile != null)
@@ -73,16 +76,20 @@ class _AddCropState extends State<AddCrop> {
                       if (AddCrop.imageFile == null) {
                         log("empty image");
                       } else {
+
                         final ref =
-                            FirebaseStorage.instance.ref().child("cropimages");
+                            FirebaseStorage.instance.ref().child("cropImages").child("${now}.jpg");
                         await ref.putFile(AddCrop.imageFile!);
                         AddCrop.url = await ref.getDownloadURL();
+                        AddCrop.imageFile = null;
                       }
+
                       await UploadData.addUploadData();
+                      AddCrop.url = null;
                       // log(UploadData.addUploadData().toString());
                       setState(() {});
                     },
-                    child: const Text("upload file"),
+                    child:  Text("upload".tr),
                   )
                 : ElevatedButton(
                     style: ButtonStyle(
@@ -92,7 +99,7 @@ class _AddCropState extends State<AddCrop> {
                     ),
                     onPressed: () {},
                     child: Text(
-                      "upload file",
+                      "upload".tr,
                       style: GoogleFonts.lato(color: Colors.white),
                     ),
                   ),

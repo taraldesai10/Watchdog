@@ -14,8 +14,12 @@ class AdminBottomBar extends StatefulWidget {
 class _AdminBottomBarState extends State<AdminBottomBar> {
   int page = 0;
 
-  final List pages = [const AdminCropPage(), const AdminDoctorAddPage()];
+  final List pages = [
+    const AdminCropPage(),
+    const AdminDoctorAddPage(),
+  ];
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +32,12 @@ class _AdminBottomBarState extends State<AdminBottomBar> {
         height: 60,
         items: const <Widget>[
           Icon(
-            CupertinoIcons.home,
+            CupertinoIcons.tree,
             size: 30,
             color: Colors.white,
           ),
           Icon(
-            CupertinoIcons.cart,
+            CupertinoIcons.person,
             size: 30,
             color: Colors.white,
           ),

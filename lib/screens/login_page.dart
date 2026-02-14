@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:krishi_mitra/common/shared_pref.dart';
 import 'package:krishi_mitra/screens/otp_page.dart';
 import 'package:krishi_mitra/screens/splash_screen.dart';
 import 'package:lottie/lottie.dart';
@@ -21,6 +22,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
 
   @override
   void initState() {
+
     countryController.text = "+91";
     super.initState();
   }
@@ -131,7 +133,8 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
                                 builder: (context) =>
                                     const OtpVerificationScreen(),
                               ));
-                          PhoneVerificationScreen.comPhone = phone;
+                       SharedPref.setPhoneNumber = phone;
+                        PhoneVerificationScreen.comPhone = phone;
                           var sharedPref =
                               await SharedPreferences.getInstance();
                           sharedPref.setBool(SplashScreen.keyLogin, true);
@@ -150,4 +153,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
       ),
     );
   }
+
+
+
 }

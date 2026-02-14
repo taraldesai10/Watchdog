@@ -56,40 +56,29 @@ class _WeatherState extends State<Weather> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 70,
-                child:
-                    _weathermodel?.temperature.round() != null?
-                        _weathermodel!.temperature.round() > 30?
-                            SizedBox(
+                  width: 70,
+                  child: _weathermodel?.temperature.round() != null
+                      ? _weathermodel!.temperature.round() > 30
+                          ? SizedBox(
                               width: 70,
                               child: Lottie.asset(sunImage),
                             )
-                  :
-                            _weathermodel!.temperature.round() >20?
-                            SizedBox(
-                              width: 70,
-                              child: Lottie.asset(sunnyImage),
-                            ):
-                            SizedBox(
-                              width: 70,
-                              child: Lottie.asset(coldImage),
-                            )
-                        :
-                        SizedBox(
-                          height: 50,
-                            width: 20,
-
-                            child: CircularProgressIndicator())
-                // Lottie.asset(
-                //   (_weathermodel?.temperature.round() != null)
-                //       ? (_weathermodel!.temperature.round() > 30)
-                //           ? "Loading"
-                //           : (_weathermodel!.temperature.round() > 20)
-                //               ? sunnyImage
-                //               : coldImage
-                //       : sunnyImage,
-                // ),
-              ),
+                          : _weathermodel!.temperature.round() > 20
+                              ? SizedBox(
+                                  width: 70,
+                                  child: Lottie.asset(sunnyImage),
+                                )
+                              : SizedBox(
+                                  width: 70,
+                                  child: Lottie.asset(coldImage),
+                                )
+                      : Center(
+                        child: SizedBox(
+                          height: 100,
+                          width: 100,
+                          child: Lottie.asset("assets/icons/loading_.json")
+                        ,),
+                      ),),
               const SizedBox(
                 width: 10,
               ),

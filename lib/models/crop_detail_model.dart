@@ -5,7 +5,9 @@ class CropDetail {
   late String acres;
   late String picture;
   late String name;
+  late String userMobile;
   late String uid;
+  late String image;
   CropDetail({
     required this.acres,
     required this.condition,
@@ -13,7 +15,10 @@ class CropDetail {
     required this.date,
     required this.picture,
     required this.name,
+    required this.userMobile,
     required this.uid,
+    required this.image
+
   });
   factory CropDetail.fromJson(Map<String, dynamic> json) => CropDetail(
       acres: json["acres"],
@@ -22,7 +27,10 @@ class CropDetail {
       date: json["date"],
       picture: json["picture"],
       name: json["name"],
-      uid: json["uid"]);
+      userMobile: json["userMobile"],
+      uid: json["uid"],
+  image: json["image"]
+  );
   Map<String, dynamic> toJson() => {
         "acres": acres,
         "condition": condition,
@@ -30,6 +38,8 @@ class CropDetail {
         "date": date,
         "picture": picture,
         "name": name,
+    "userMobile"  : userMobile,
         "uid": uid,
+    "image" : image
       };
 }

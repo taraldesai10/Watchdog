@@ -2,9 +2,11 @@
 
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:krishi_mitra/common/shared_pref.dart';
 import 'package:krishi_mitra/screens/bottom_nav_bar.dart';
 import 'package:krishi_mitra/screens/home_screen/home_page.dart';
 import 'package:krishi_mitra/screens/login_page.dart';
@@ -12,6 +14,7 @@ import 'package:krishi_mitra/screens/user_detail.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
@@ -128,19 +131,25 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
-                        if (UserDetailPage.forProfile == true) {
-                          Get.offUntil(
-                              MaterialPageRoute(
-                                builder: (context) => UserDetailPage(),
-                              ),
-                              (route) => false);
-                        } else {
+
+
+                        List isRegister = await isLoged();
+                        if (isRegister.isNotEmpty) {
                           Get.offUntil(
                               MaterialPageRoute(
                                 builder: (context) => CommonBottomNavigation(),
                               ),
-                              (route) => false);
+                                  (route) => false);
+                        } else {
+                          Get.offUntil(
+                              MaterialPageRoute(
+                                builder: (context) => UserDetailPage(),
+                              ),
+                                  (route) => false);
+
                         }
+
+
                       } catch (e) {
                         log("wrong otp");
                       }
@@ -150,26 +159,32 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       style: TextStyle(color: Colors.green.shade900),
                     )),
               ),
-              // Row(
-              //   children: [
-              //     TextButton(
-              //         onPressed: () {
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                 builder: (context) => OtpVerificationScreen(),
-              //               ));
-              //         },
-              //         child: const Text(
-              //           "Edit Phone Number ?",
-              //           style: TextStyle(color: Colors.black),
-              //         ))
-              //   ],
-              // )
+
             ],
           ),
         ),
       ),
     );
+  }
+  Future isLoged() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    List dataList = [];
+    try {
+      await FirebaseFirestore.instance
+          .collection("users")
+          .where("phone", isEqualTo: SharedPref.getPhoneNumber )
+
+          .get()
+          .then((QuerySnapshot querySnapshot) => {
+        querySnapshot.docs.forEach((doc) {
+          dataList.add(doc.data());
+        })
+      });
+      return dataList;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
   }
 }

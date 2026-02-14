@@ -18,46 +18,36 @@ class SchemePage extends StatefulWidget {
 }
 
 class _SchemePageState extends State<SchemePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: [
-          ...List.generate(
-            schemes.length,
-            (index) => Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(bottom: 20),
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(widget.image),
-                            fit: BoxFit.cover
-                          ),
-                        ),
-                      ),
-                      Text(
-                        widget.schemes,
-                        style: GoogleFonts.lato(
-                            color: Colors.green[900], fontSize: 19),
-                      ),
-                    ],
-                  ),
+      body:SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(widget.image),
+                      fit: BoxFit.cover),
                 ),
               ),
-            ),
-          )
-        ],
+              Text(
+                widget.schemes,
+                style: GoogleFonts.lato(
+                    color: Colors.green[900], fontSize: 14),
+              ),
+            ],
+          ),
+        ),
       ),
+
     );
   }
 }

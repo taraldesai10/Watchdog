@@ -33,7 +33,7 @@ class _DoctorLoginState extends State<DoctorLogin> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<Auth>(context);
+    // final auth = Provider.of<Auth>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -130,29 +130,14 @@ class _DoctorLoginState extends State<DoctorLogin> {
                             List isRegister = await getDoctorData();
                             if (isRegister.isNotEmpty) {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DoctorHomePage(),
-                                  ));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoctorHomePage(),
+                                ),
+                              );
                             } else {
                               Fluttertoast.showToast(msg: "not valid");
                             }
-
-                            // await auth
-                            //     .handleSignInEmail(emailTxtController.text,
-                            //         passTxtController.text)
-                            //     .then((value) {
-                            //   Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => const DoctorHomePage(),
-                            //     ),
-                            //   );
-                            //   // ignore: invalid_return_type_for_catch_error, avoid_print
-                            // }).catchError((e) => print(e));
-                            // setState(() {
-                            //   // AuthController.doctorLogin();
-                            // });
                           }
                         },
                         child: Text(

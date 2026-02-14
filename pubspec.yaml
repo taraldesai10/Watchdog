@@ -63,10 +63,20 @@ dependencies:
   flutter_tts: ^3.8.5
   geocoding: ^3.0.0
   geolocator: ^11.0.0
+  intl: ^0.19.0
+  firebase_app_check: ^0.2.2
+  flutter_launcher_icons: ^0.13.1
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/main_logo.jpg"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -94,6 +104,8 @@ flutter:
     - assets/icons/
     - assets/crops/
     - assets/government_schemes_image/
+    - assets/expert_artical_images/
+    - assets/news_assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

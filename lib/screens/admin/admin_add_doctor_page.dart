@@ -10,6 +10,7 @@ import 'package:krishi_mitra/firebase_storage/add_doctor_store.dart';
 
 class AdminDoctorAddPage extends StatefulWidget {
   const AdminDoctorAddPage({super.key});
+
   static late String doctorEmail;
   static late String doctorPass;
   static late String doctorName;
@@ -93,23 +94,29 @@ class _AdminDoctorAddPageState extends State<AdminDoctorAddPage> {
                     (index) => Dismissible(
                       confirmDismiss: (direction) {
                         return showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  actions: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("cancel")),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          AddDoctorStore.deleteDoctoreStore();
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("yes"))
-                                  ],
-                                  title: Text("are you sure want to delete?"),
-                                ));
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("cancel"),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    // AddDoctorStore.deleteDoctor();
+                                    FirebaseFirestore.instance
+                                        .collection("addDoctor")
+                                        .doc(snapshot.data!.docs[index].id)
+                                        .delete().then((value) =>  Navigator.pop(context));
+                                    // Navigator.pop(context);
+                                  },
+                                  child: Text("yes"))
+                            ],
+                            title: Text("are you sure want to delete?"),
+                          ),
+                        );
                       },
                       key: UniqueKey(),
                       child: Padding(
@@ -259,6 +266,7 @@ class _AdminDoctorAddPageState extends State<AdminDoctorAddPage> {
           ),
         ),
       );
+
   Widget updateDilog() => Container(
         padding: const EdgeInsets.all(20),
         height: 500,
@@ -351,6 +359,7 @@ class _AdminDoctorAddPageState extends State<AdminDoctorAddPage> {
           ),
         ),
       );
+
   @override
   void dispose() {
     txtEmailController.dispose();

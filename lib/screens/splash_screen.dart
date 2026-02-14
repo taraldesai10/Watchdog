@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:krishi_mitra/screens/bottom_nav_bar.dart';
 
 import 'package:krishi_mitra/screens/language_page.dart';
+import 'package:krishi_mitra/screens/select_side.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,13 +62,13 @@ class _SplashScreenState extends State<SplashScreen>
           } else {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const LanguagePage()),
+              MaterialPageRoute(builder: (context) => const SelectSide()),
             );
           }
         } else {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const LanguagePage()),
+            MaterialPageRoute(builder: (context) => const SelectSide()),
           );
         }
       },

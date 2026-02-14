@@ -8,6 +8,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:krishi_mitra/common/appbar.dart';
+import 'package:krishi_mitra/common/shared_pref.dart';
 import 'package:krishi_mitra/common/theam.dart';
 import 'package:krishi_mitra/common/weather_api.dart';
 import 'package:krishi_mitra/models/mapfor_government_schemes.dart';
@@ -15,8 +16,11 @@ import 'package:krishi_mitra/models/mapfor_government_schemes.dart';
 import 'package:krishi_mitra/models/user_model.dart';
 import 'package:krishi_mitra/screens/home_screen/crop_doctor/crop_doctor.dart';
 import 'package:krishi_mitra/screens/home_screen/government%20_schemes,dart/government_schemes.dart';
-import 'package:krishi_mitra/screens/news/news.dart';
+import 'package:krishi_mitra/screens/home_screen/news/news.dart';
+import 'package:krishi_mitra/screens/home_screen/shortcuts.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'expert_articles/expert_article_titles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -85,94 +89,98 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget homePage() {
-    return Column(
-      children: [
-        commonappbar(),
-        const Weather(),
-
-        Container(
-          height: 270,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          decoration: BoxDecoration(
-              color: Colors.green[200],
-              borderRadius: BorderRadius.circular(50)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  homeButtons(
-                      image: "assets/icons/stethoscope.svg",
-                      text: "crop doctor",
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          commonappbar(),
+          const Weather(),
+      
+          Container(
+            height: 270,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            decoration: BoxDecoration(
+                color: Colors.green[200],
+                borderRadius: BorderRadius.circular(50)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    homeButtons(
+                        image: "assets/icons/stethoscope.svg",
+                        text: "crop doctor",
+                        tap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CropDoctor(),
+                            ),
+                          );
+                          return (snack) {};
+                        }),
+                    homeButtons(
+                      image: "assets/icons/news-paper-svgrepo-com.svg",
+                      text: "news",
+                      tap: () {
+      
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const News(),
+                          ),
+                        );
+                        return (snack) {};
+                      },
+                    ),
+                    homeButtons(
+                      image: "assets/icons/Expert.svg",
+                      text: "expert articles",
                       tap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CropDoctor(),
+                            builder: (context) => const ExpertArticles(),
                           ),
                         );
                         return (snack) {};
-                      }),
-                  homeButtons(
-                    image: "assets/icons/news-paper-svgrepo-com.svg",
-                    text: "news",
-                    tap: () {
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const News(),
-                        ),
-                      );
-                      return (snack) {};
-                    },
-                  ),
-                  homeButtons(
-                    image: "assets/icons/Expert.svg",
-                    text: "expert articles",
-                    tap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const News(),
-                        ),
-                      );
-                      return (snack) {};
-                    },
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  homeButtons(
-                    image: "assets/icons/gov.svg",
-                    text: "government",
-                    tap: () {
-
-                      setState(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const GovernmentSchemes(),
-                          ),
-
-                        );
-                      });
-
-                      return (snack) {
-
-                      };
-                    },
-                  )
-                ],
-              )
-            ],
+                      },
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    homeButtons(
+                      image: "assets/icons/gov.svg",
+                      text: "government",
+                      tap: () {
+      
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const GovernmentSchemes(),
+                            ),
+      
+                          );
+                        });
+      
+                        return (snack) {
+      
+                        };
+                      },
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+          GovernmentSchemesShort(),
+          ExpertAdviceShortCut()
+        ],
+      ),
     );
   }
 }

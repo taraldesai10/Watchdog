@@ -25,7 +25,7 @@ class AddDoctorStore {
             .tojJson());
   }
 
-  static Future<void> deleteDoctoreStore() {
+  static Future<void> deleteDoctor() {
     return FirebaseFirestore.instance
         .collection("addDoctor")
         .doc(AdminDoctorAddPage.docId)

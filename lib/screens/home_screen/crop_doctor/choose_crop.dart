@@ -44,7 +44,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                     chooseCrop.length,
                     (index) => GestureDetector(
                       onTap: () {
-                        ChooseCrop.cropName = chooseCrop[index]["crop name"];
+                        ChooseCrop.cropName = chooseCrop[index]["crop name"].toString().tr;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -61,7 +61,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                           color: Colors.green[300],
                           image: DecorationImage(
                               image: AssetImage(
-                                chooseCrop[index]["image"],
+                                chooseCrop[index]["image"].toString().tr,
                               ),
                               fit: BoxFit.contain),
                         ),
@@ -72,7 +72,7 @@ class _ChooseCropState extends State<ChooseCrop> {
                           decoration:
                               BoxDecoration(color: Colors.green.shade900),
                           child: Text(
-                            chooseCrop[index]["crop name"],
+                            chooseCrop[index]["crop name"].toString().tr,
                             style: GoogleFonts.lato(
                               color: Colors.white,
                             ),

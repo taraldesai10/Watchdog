@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ import 'package:krishi_mitra/screens/login_page.dart';
 
 class AddCropDetail extends StatefulWidget {
   const AddCropDetail({super.key, required this.image, required this.name});
-  static String? selectedCondition;
+  static String selectedCondition = "";
   static String? plantedDate;
   static String? acers;
 
@@ -29,8 +30,11 @@ class _AddCropDetailState extends State<AddCropDetail> {
 
   DateTime selectedDate = DateTime.now();
   GlobalKey<FormState> key = GlobalKey<FormState>();
-  String errorCondition = "";
+  // String errorCondition = "";
+  bool errorCondition = false;
+
   String errorDate = "";
+  TextEditingController dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,7 @@ class _AddCropDetailState extends State<AddCropDetail> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: AssetImage(
-                          widget.image,
+                          widget.image.tr,
                         ),
                         fit: BoxFit.contain,
                       ),
@@ -82,10 +86,10 @@ class _AddCropDetailState extends State<AddCropDetail> {
                       (index) => GestureDetector(
                         onTap: () {
                           selectedTap = index;
-
+                          errorCondition = true;
                           //selectedCondition is for upload data in firebase
                           AddCropDetail.selectedCondition =
-                              cropCondition[index]["name"];
+                              cropCondition[index]["name"].toString().tr;
                           print(AddCropDetail.selectedCondition);
                           setState(() {});
                         },
@@ -105,7 +109,7 @@ class _AddCropDetailState extends State<AddCropDetail> {
                             ),
                           ),
                           child: Text(
-                            cropCondition[index]["name"],
+                            cropCondition[index]["name"].toString(). tr,
                             style: GoogleFonts.lato(
                               color: (selectedTap == index)
                                   ? Colors.white
@@ -117,39 +121,45 @@ class _AddCropDetailState extends State<AddCropDetail> {
                     ),
                   ],
                 ),
-                Text(errorCondition,
+                Text(errorCondition?"":"",
                     style: GoogleFonts.lato(color: Colors.red)),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      final DateTime? picked = await showDatePicker(
-                        // initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-                        firstDate: DateTime(2021),
+                  child: TextFormField(
+                    validator: MultiValidator([
+                    RequiredValidator(errorText: "enter date")
+                    ]),
+                      controller: dateController,
+                      decoration:  InputDecoration(
+                          icon: Icon(Icons.calendar_today),
+                          labelText: "enter date".tr
+                      ),
+                       readOnly: true,
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(), //get today's date
+                            firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                            lastDate: DateTime.now()
 
-                        lastDate: DateTime.now(), context: context,
-                      );
-                      if (picked != null && picked != selectedDate) {
-                        setState(() {
-                          AddCropDetail.plantedDate =
-                              "${selectedDate.toLocal()}".split(' ')[0];
 
-                          selectedDate = picked;
-                        });
+                        );
+                        if(pickedDate != null ){
+                          print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
+                          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                          print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                          //You can format date as per your need
+
+                          setState(() {
+                            dateController.text = formattedDate;
+                            AddCropDetail.plantedDate = dateController.text;
+                          });
+                        }else{
+                          print("Date is not selected");
+                        }
                       }
-                    },
-                    child: const Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(CupertinoIcons.calendar),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Select date"),
-                      ],
-                    ),
-                  ),
+                  )
+
                 ),
                 Text(
                   errorDate,
@@ -160,7 +170,7 @@ class _AddCropDetailState extends State<AddCropDetail> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text("Acres :"),
+                     Text("${"acres".tr}  :"),
                     const SizedBox(
                       width: 5,
                     ),
@@ -182,20 +192,18 @@ class _AddCropDetailState extends State<AddCropDetail> {
                     ),
                   ],
                 ),
-                Text(PhoneVerificationScreen.comPhone),
+
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (AddCropDetail.selectedCondition == null) {
-                        errorCondition = "please select Condition";
-                      }
-                      if (AddCropDetail.plantedDate == null) {
-                        errorDate = "please Enter date";
-                        log(AddCropDetail.plantedDate.toString());
-                      }
+
+
                       if (key.currentState!.validate()) {
+                        if (errorCondition == null) {
+
+                        }
                         AddCropDetail.acers = txtAcresController.text;
                         Navigator.push(
                           context,
